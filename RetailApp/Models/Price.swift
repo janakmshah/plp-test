@@ -5,4 +5,3 @@ struct Price: Codable {
   let originalPrice: Int?
   let currencyCode: String
 }
-

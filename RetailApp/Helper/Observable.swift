@@ -2,6 +2,7 @@ import Foundation
 
 class Observable<T> {
   class Observer {
+    // swiftlint:disable:next nesting
     typealias ObserverAction = (T) -> Void
 
     fileprivate weak var observer: AnyObject?

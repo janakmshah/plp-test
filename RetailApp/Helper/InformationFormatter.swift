@@ -9,4 +9,3 @@ struct InformationFormatterImplementation: InformationFormatter {
     return information.map { "\($0.sectionTitle)\n\($0.sectionText)" }.joined(separator: "\n\n")
   }
 }
-

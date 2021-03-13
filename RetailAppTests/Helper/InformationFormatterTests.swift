@@ -17,5 +17,3 @@ class InformationFormatterTests: XCTestCase {
     XCTAssertEqual(output, "title\ntext\n\ntitle1\n\n\n\ntext2")
   }
 }
-
-

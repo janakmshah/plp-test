@@ -1,7 +1,6 @@
 import XCTest
 @testable import RetailApp
 
-
 class APITests: XCTestCase {
 
   let url = URL(string: "http://www.marksandspencer.com")!
@@ -30,7 +29,6 @@ class APITests: XCTestCase {
     let mockURLSession = MockURLSessionProtocol()
     let apiSUT = API(urlSession: mockURLSession, baseURL: url)
 
-
     let callbackExpectation = expectation(description: "updated")
     apiSUT.load(Resource<TestModel>(path: "")) { result in
       callbackExpectation.fulfill()
@@ -42,7 +40,7 @@ class APITests: XCTestCase {
         XCTFail("Should be .requestError got \(httpError)")
         return
       }
-      guard let _ = theErrorToReturn as? ImageDecodingError else {
+      guard theErrorToReturn as? ImageDecodingError != nil else {
         XCTFail("Wrong error returned")
         return
       }
@@ -54,7 +52,6 @@ class APITests: XCTestCase {
   func test_load_whenNotHTTPURLResponse_returnsInvalidResponse() {
     let mockURLSession = MockURLSessionProtocol()
     let apiSUT = API(urlSession: mockURLSession, baseURL: url)
-
 
     let callbackExpectation = expectation(description: "updated")
     apiSUT.load(Resource<TestModel>(path: "")) { result in
@@ -76,7 +73,6 @@ class APITests: XCTestCase {
     let mockURLSession = MockURLSessionProtocol()
     let apiSUT = API(urlSession: mockURLSession, baseURL: url)
 
-
     let callbackExpectation = expectation(description: "updated")
     apiSUT.load(Resource<TestModel>(path: "")) { result in
       callbackExpectation.fulfill()
@@ -97,7 +93,6 @@ class APITests: XCTestCase {
   func test_load_whenSuccessfulRequest_returnsDecodedModel() {
     let mockURLSession = MockURLSessionProtocol()
     let apiSUT = API(urlSession: mockURLSession, baseURL: url)
-
 
     let callbackExpectation = expectation(description: "updated")
     apiSUT.load(Resource<TestModel>(path: "")) { result in

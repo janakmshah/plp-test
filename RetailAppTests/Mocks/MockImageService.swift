@@ -2,8 +2,8 @@ import UIKit
 @testable import RetailApp
 
 class MockImageService: ImageService {
-  var onDownloadCalled: (() -> Void)? = nil
-  private(set) var lastCompletion: ((Result<UIImage, Error>) -> Void)? = nil
+  var onDownloadCalled: (() -> Void)?
+  private(set) var lastCompletion: ((Result<UIImage, Error>) -> Void)?
   var callCount = 0
   var requestedKeys: [String] = []
 

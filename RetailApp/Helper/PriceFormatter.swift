@@ -18,7 +18,7 @@ struct PriceFormatterImplementation: PriceFormatter {
 
   private func stringFromPrice(price: Int) -> String {
     let divisor = pow(10, numberFormatter.minimumFractionDigits)
-    let decimalPrice = Decimal(integerLiteral: price) / divisor
+    let decimalPrice = Decimal(price) / divisor
     return numberFormatter.string(from: decimalPrice as NSDecimalNumber) ?? ""
   }
 
@@ -47,4 +47,3 @@ struct PriceFormatterImplementation: PriceFormatter {
     return priceString
   }
 }
-

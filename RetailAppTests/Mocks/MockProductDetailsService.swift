@@ -2,7 +2,7 @@ import Foundation
 @testable import RetailApp
 
 class MockProductDetailsService: ProductDetailsService {
-  private(set) var lastCompletion: ((Result<ProductDetails, Error>) -> Void)? = nil
+  private(set) var lastCompletion: ((Result<ProductDetails, Error>) -> Void)?
   var callCount = 0
   var requestedIDs: [String] = []
   func getProduct(id: String, completion: @escaping (Result<ProductDetails, Error>) -> Void) {

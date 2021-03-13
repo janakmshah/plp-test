@@ -64,5 +64,3 @@ class ObservableTests: XCTestCase {
     wait(for: [actionExpectation], timeout: 0.1)
   }
 }
-
-

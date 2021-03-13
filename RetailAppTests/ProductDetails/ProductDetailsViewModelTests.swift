@@ -81,7 +81,7 @@ class ProductDetailsViewModelTests: XCTestCase {
     mockProductDetailsService.lastCompletion?(.value(productDetails))
 
     let actionExpectation = expectation(description: "updated")
-    productDetailsViewModelSUT.image.bindNoFire(self) { image in
+    productDetailsViewModelSUT.image.bindNoFire(self) { _ in
       actionExpectation.fulfill()
     }
     mockImageService.lastCompletion?(.value(UIImage()))
