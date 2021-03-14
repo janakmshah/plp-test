@@ -22,4 +22,9 @@ class AppCoordinator {
         self.rootNavController?.pushViewController(productDetailsVC, animated: true)
     }
     
+    func show(error: Error) {
+        let alertController = UIAlertController(title: "Oh no!", message: error.localizedDescription, preferredStyle: .alert)
+        self.rootNavController?.present(alertController, animated: true)
+    }
+    
 }
