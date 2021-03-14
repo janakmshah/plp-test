@@ -8,26 +8,6 @@
 
 import UIKit
 
-public enum CoordinatorEvent {
-    case openDeepLink
-    case permissionsFlow(telematics: Bool, source: Any?)
-}
-
-public protocol Coordinator: class {
-    var childCoordinators: [Coordinator] { get set }
-    var parentCoordinator: Coordinator? { get }
-    var rootNavController: UINavigationController? { get }
-    var rootViewController: UIViewController? { get set }
-    // Where the parent isn't a CUVCoordinator
-    func start(from parent: UIViewController)
-
-    // Where the parent is anothero CUVCoordinator
-    func start(from parent: Coordinator)
-    
-    func handleOrPassToParent(_ event: CoordinatorEvent)
-
-}
-
 class AppCoordinator {
     
     var rootNavController: UINavigationController?
@@ -38,10 +18,8 @@ class AppCoordinator {
     }
     
     func navigateToProductDetail(_ product: ProductRequest) {
-        
         let productDetailsVC = ProductDetailsViewController(viewModel: ProductDetailsViewModel(productRequest: product))
         self.rootNavController?.pushViewController(productDetailsVC, animated: true)
-        
     }
     
 }
