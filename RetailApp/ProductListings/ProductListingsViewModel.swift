@@ -69,4 +69,69 @@ class ProductListingsViewModel {
                                                  price: priceFormatter.formatPrice($0.price))
         }
     }
+    
+    // MARK: - Helpers
+    
+    private func badgeToDisplay(userOffers: UserOffers) -> String? {
+        
+        let offerIds: [String] = [] // e.g. ["2", "3", "5", "4"]
+        
+        let availableBadgesString = "" // e.g. "loyalty:SLOTTED,BONUS||sale:PRIORITY_ACCESS,REDUCED"
+        
+        let availableBadgesInPriority: [String] = []
+        /* e.g.
+         [
+         "loyalty:SLOTTED,BONUS",
+         "sale:PRIORITY_ACCESS,REDUCED"
+         ]
+         */
+        
+        let prioritisedBadgeObjects: [Badge] = []
+        /* e.g.
+         [
+         [name: "loyalty", types: ["SLOTTED", "BONUS"],
+         [name: "sale", types: ["PRIORITY_ACCESS", "REDUCED"]
+         ]
+         */
+        
+        let matchingOffers = userOffers.offers.filter { offerIds.contains($0.id) }
+        
+        let displayOffer = prioritisedBadgeObjects.first { badge -> Bool in
+            for type in badge.types {
+                for offer in matchingOffers {
+                    if offer.id == type {
+                        return true
+                    }
+                }
+            }
+            return false
+        }
+        
+        return displayOffer?.name
+        
+    }
+}
+
+struct UserOffers: Codable {
+    let availableBadges: [Badge]
+    let offers: [Offer]
+}
+
+struct Badge: Codable {
+    let name: String
+    let types: [String]
+}
+
+/*
+ "offers": [
+ {
+ "id": "6",
+ "title": "Reductions!",
+ "type": "REDUCED"
+ }
+ */
+struct Offer: Codable {
+    let id: String
+    let title: String
+    let type: String
 }
