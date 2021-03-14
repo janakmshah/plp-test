@@ -104,18 +104,19 @@ class ProductListingsViewModel {
     
     // MARK: - Helpers
     
+    // TODO: This happens for all the listings at once, better to move to ViewModel
     private func badgeToDisplay(offerIds: [String]) -> String? {
                 
         let matchingOffers = User.current.userOffers.offers.filter { offerIds.contains($0.id) }
-        print(matchingOffers)
         
         let displayOffer = User.current.userOffers.availableBadges.first { badge -> Bool in
+            
             for type in badge.types {
-                print(type)
                 for offer in matchingOffers where offer.type == type {
                     return true
                 }
             }
+            
             return false
         }
         
