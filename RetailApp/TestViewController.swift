@@ -23,7 +23,7 @@ class TestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         title = "Tops"
         self.navigationItem.largeTitleDisplayMode = .always
         self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -40,7 +40,7 @@ class TestViewController: UIViewController {
         
         collectionView.register(ProductCell.self, forCellWithReuseIdentifier: String(describing: ProductCell.self))
         
-        ProductsServiceImplementation(api: API(urlSession: URLSession(configuration: .default), baseURL: URL(string: "http://admin:password@interview-tech-testing.herokuapp.com")!)).getProducts { [weak self] (result) in
+        ProductsServiceImplementation(api: API(urlSession: URLSession(configuration: .default), baseURL: URL(string: "http://interview-tech-testing.herokuapp.com")!)).getProducts { [weak self] (result) in
             switch result {
             case .value(let products):
                 self?.items = products.products
@@ -51,7 +51,7 @@ class TestViewController: UIViewController {
         }
         
     }
-
+    
 }
 
 extension TestViewController: UICollectionViewDataSource {
@@ -63,9 +63,7 @@ extension TestViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProductCell.self), for: indexPath as IndexPath) as? ProductCell else { return UICollectionViewCell() }
-        cell.titleLabel.text = self.items[indexPath.row].name
-        cell.priceLabel.attributedText = PriceFormatterImplementation().formatPrice(self.items[indexPath.row].price)
-        cell.backgroundColor = UIColor.cyan
+        cell.update(with: self.items[indexPath.row])
         
         return cell
     }
@@ -91,7 +89,12 @@ class ProductCell: UICollectionViewCell {
         return label
     }()
     
-    let image = UIImageView()
+    let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
+    }()
     
     let priceLabel: UILabel = {
         let label = UILabel()
@@ -112,25 +115,50 @@ class ProductCell: UICollectionViewCell {
     }
     
     // MARK: - Layout
-
+    
     func setInitialLayout() {
         
-        contentView.add(image, titleLabel, priceLabel)
-        image.pinTo(top: 0, left: 0, right: 0)
-        let imageHeightRatio = image.heightAnchor.constraint(equalTo: image.widthAnchor, multiplier: 1.5)
-        imageHeightRatio.priority = .defaultHigh
+        contentView.add(imageView, titleLabel, priceLabel)
+        imageView.pinTo(top: 0, left: 0, right: 0)
+        let imageHeightRatio = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1.5)
+        imageHeightRatio.priority = UILayoutPriority(999)
         imageHeightRatio.isActive = true
         
         titleLabel.pinTo(left: 0, right: 0)
-        titleLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: Size.spacingSmall).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Size.spacingSmall).isActive = true
         
         priceLabel.pinTo(bottom: 25, left: 0, right: 0)
         priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Size.spacingSmall).isActive = true
         
         let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: (UIScreen.main.bounds.width / 2) - (Size.spacingSmall * 1.5))
-        widthConstraint.priority = .defaultHigh
+        widthConstraint.priority = UILayoutPriority(999)
         widthConstraint.isActive = true
-
+        
+    }
+    
+    func update(with productDetails: ProductDetailsBasic) {
+        titleLabel.text = productDetails.name
+        priceLabel.attributedText = PriceFormatterImplementation().formatPrice(productDetails.price)
+        backgroundColor = UIColor.cyan
+        
+        // First check cache
+        if let cachedImage = ImageCache.fetch(for: productDetails.imageKey) {
+            imageView.image = cachedImage
+            return
+        }
+        
+        // If nothing in cache, load from remote
+        imageView.image = UIImage(named: "Placeholder")
+        ImageServiceImplementation(api: API(urlSession: URLSession(configuration: .default), baseURL: URL(string: "http://interview-tech-testing.herokuapp.com")!)).downloadImage(key: productDetails.imageKey) { [weak self] (result) in
+            switch result {
+            case .value(let downloadedImage):
+                self?.imageView.image = downloadedImage
+                ImageCache.cache(downloadedImage, for: productDetails.imageKey) // Save to cache
+            case .error(let error):
+                self?.imageView.image = UIImage(named: "Placeholder")
+                print(error)
+            }
+        }
     }
     
 }

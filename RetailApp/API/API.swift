@@ -28,6 +28,14 @@ class API {
     var urlRequest = URLRequest(url: baseURL.appendingPathComponent(resource.path))
     urlRequest.httpMethod = resource.method
     urlRequest.httpBody = resource.body
+    
+    let username = "admin"
+    let password = "password"
+    let loginString = "\(username):\(password)"
+    guard let loginData = loginString.data(using: String.Encoding.utf8) else { return }
+    urlRequest.httpMethod = "GET"
+    urlRequest.setValue("Basic " + (loginData.base64EncodedString()), forHTTPHeaderField: "Authorization")
+    
     urlSession.resumableDataTask(with: urlRequest) { data, urlResponse, error in
       func completionOnMain(_ result: Result<Model, Error>) {
         DispatchQueue.main.async {

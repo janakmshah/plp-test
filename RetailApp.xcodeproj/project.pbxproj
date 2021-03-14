@@ -39,10 +39,11 @@
 		7F192B9125FD652100A0171F /* Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192B9025FD652100A0171F /* Products.swift */; };
 		7F192B9725FD663600A0171F /* ProductDetailsBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192B9625FD663600A0171F /* ProductDetailsBasic.swift */; };
 		7F192B9D25FD67E700A0171F /* ProductsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192B9C25FD67E700A0171F /* ProductsService.swift */; };
+		7F192BA125FD69D600A0171F /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BA025FD69D600A0171F /* TestViewController.swift */; };
 		7F192BAA25FE162900A0171F /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BA925FE162900A0171F /* Extension+UIView.swift */; };
 		7F192BB425FE16DA00A0171F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BB325FE16DA00A0171F /* Theme.swift */; };
 		7F192BB825FE16E100A0171F /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BB725FE16E100A0171F /* Size.swift */; };
-		7F192BA125FD69D600A0171F /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BA025FD69D600A0171F /* TestViewController.swift */; };
+		7F192BC825FE3B1D00A0171F /* SessionImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BC725FE3B1D00A0171F /* SessionImageCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,10 +95,11 @@
 		7F192B9025FD652100A0171F /* Products.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Products.swift; sourceTree = "<group>"; };
 		7F192B9625FD663600A0171F /* ProductDetailsBasic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsBasic.swift; sourceTree = "<group>"; };
 		7F192B9C25FD67E700A0171F /* ProductsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsService.swift; sourceTree = "<group>"; };
+		7F192BA025FD69D600A0171F /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		7F192BA925FE162900A0171F /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		7F192BB325FE16DA00A0171F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		7F192BB725FE16E100A0171F /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
-		7F192BA025FD69D600A0171F /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		7F192BC725FE3B1D00A0171F /* SessionImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionImageCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +268,7 @@
 				301581462215A6AF00199803 /* Observable.swift */,
 				7F192BB325FE16DA00A0171F /* Theme.swift */,
 				7F192BB725FE16E100A0171F /* Size.swift */,
+				7F192BC725FE3B1D00A0171F /* SessionImageCache.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				306805A721F22A7200B99BB8 /* ProductInformation.swift in Sources */,
 				7F192B9725FD663600A0171F /* ProductDetailsBasic.swift in Sources */,
 				301581472215A6AF00199803 /* Observable.swift in Sources */,
+				7F192BC825FE3B1D00A0171F /* SessionImageCache.swift in Sources */,
 				7F192BAA25FE162900A0171F /* Extension+UIView.swift in Sources */,
 				7F192B9125FD652100A0171F /* Products.swift in Sources */,
 				3068059E21F21FC100B99BB8 /* Price.swift in Sources */,
