@@ -31,6 +31,7 @@ class ProductListingsViewModel {
     init(coordinator: AppCoordinator,
          productsService: ProductsService = ProductsServiceImplementation(api: API.defaultAPI),
          priceFormatter: PriceFormatter = PriceFormatterImplementation()) {
+        
         self.coordinator = coordinator
         self.productsService = productsService
         self.priceFormatter = priceFormatter
@@ -39,7 +40,7 @@ class ProductListingsViewModel {
         self.getProducts()
     }
     
-    // MARK: - Functions
+    // MARK: - Update data
     
     private func getProducts() {
         
@@ -53,9 +54,14 @@ class ProductListingsViewModel {
         
     }
     
+    // MARK: - User interaction
+    
     func openProductDetails(_ index: Int) {
         self.coordinator?.navigateToProductDetail(products[index])
     }
+    
+    
+    // MARK: - Update views
     
     private func updateObservables(products: [ProductDetailsBasic]) {
         displayProducts.value = products.map {

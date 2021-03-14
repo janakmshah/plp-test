@@ -8,7 +8,7 @@
 
 import UIKit
 
-// Reduced uneccesary image requests
+// Reducing uneccesary image requests
 struct ImageCache {
 
     static private let concurrentImageCacheQueue = DispatchQueue(label: "com.marksandspencer.technical-test.RetailApp.image.cache.queue", attributes: .concurrent)

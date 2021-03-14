@@ -32,7 +32,7 @@ class API {
         urlRequest.httpMethod = resource.method
         urlRequest.httpBody = resource.body
         
-        //TODO: Hardcoded values here seem wrong
+        //TODO: Hardcoding values here seem wrong
         let username = "admin"
         let password = "password"
         let loginString = "\(username):\(password)"

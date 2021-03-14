@@ -78,6 +78,8 @@ class ProductCell: UICollectionViewCell {
         
     }
     
+    // MARK: - Update view
+    
     func update(with productDetails: ProductCellDisplayable) {
         titleLabel.text = productDetails.title
         priceLabel.attributedText = productDetails.price

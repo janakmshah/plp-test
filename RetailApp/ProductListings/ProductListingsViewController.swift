@@ -21,7 +21,6 @@ class ProductListingsViewController: UIViewController {
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumInteritemSpacing = Size.spacingRegular
         flowLayout.minimumLineSpacing = Size.spacingLarge
-        
         return UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
     }()
     
@@ -40,28 +39,28 @@ class ProductListingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = "Tops"
         self.navigationItem.largeTitleDisplayMode = .always
         self.navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = .white
-        
+        bind()
+    }
+    
+    deinit {
+        viewModel.displayProducts.unbind(self)
+    }
+    
+    // MARK: - Helpers
+    
+    private func setupCollectionView() {
         view.add(collectionView)
         collectionView.pinTo(top: 0, bottom: 0, left: 0, right: 0)
-        
+        collectionView.register(ProductCell.self, forCellWithReuseIdentifier: String(describing: ProductCell.self))
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsets(top: 0, left: Size.spacingRegular, bottom: 0, right: Size.spacingRegular)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .white
-        collectionView.register(ProductCell.self, forCellWithReuseIdentifier: String(describing: ProductCell.self))
-        
-        bind()
-        
-    }
-    
-    deinit {
-        viewModel.displayProducts.unbind(self)
     }
     
     private func bind() {
@@ -80,10 +79,8 @@ extension ProductListingsViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProductCell.self), for: indexPath as IndexPath) as? ProductCell else { return UICollectionViewCell() }
         cell.update(with: self.products[indexPath.item])
-        
         return cell
     }
     
