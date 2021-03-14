@@ -42,6 +42,7 @@
 		7F192BAA25FE162900A0171F /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BA925FE162900A0171F /* Extension+UIView.swift */; };
 		7F192BB425FE16DA00A0171F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BB325FE16DA00A0171F /* Theme.swift */; };
 		7F192BB825FE16E100A0171F /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BB725FE16E100A0171F /* Size.swift */; };
+		7F192BA125FD69D600A0171F /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BA025FD69D600A0171F /* TestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		7F192BA925FE162900A0171F /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		7F192BB325FE16DA00A0171F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		7F192BB725FE16E100A0171F /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
+		7F192BA025FD69D600A0171F /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 				306805AA21F22FB100B99BB8 /* Helper */,
 				3068059821F21F6C00B99BB8 /* ProductDetails */,
 				3046987521F0D55F0056504A /* AppDelegate.swift */,
+				7F192BA025FD69D600A0171F /* TestViewController.swift */,
 				3068059F21F2292700B99BB8 /* Models */,
 				3046987C21F0D5610056504A /* Assets.xcassets */,
 				3046987E21F0D5610056504A /* LaunchScreen.storyboard */,
@@ -402,6 +405,7 @@
 			files = (
 				304698AB21F0D7C50056504A /* Result.swift in Sources */,
 				7F192BB825FE16E100A0171F /* Size.swift in Sources */,
+				7F192BA125FD69D600A0171F /* TestViewController.swift in Sources */,
 				3046987821F0D55F0056504A /* ProductDetailsViewController.swift in Sources */,
 				3068059C21F21F9900B99BB8 /* ProductDetails.swift in Sources */,
 				3068059A21F21F8400B99BB8 /* ProductDetailsViewModel.swift in Sources */,

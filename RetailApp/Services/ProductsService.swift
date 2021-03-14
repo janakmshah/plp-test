@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ProductsService {
-    func getProducts(completion: @escaping (Result<ProductDetailsBasic, Error>) -> Void)
+    func getProducts(completion: @escaping (Result<Products, Error>) -> Void)
 }
 
 class ProductsServiceImplementation: ProductsService {
@@ -19,8 +19,8 @@ class ProductsServiceImplementation: ProductsService {
         self.api = api
     }
     
-    func getProducts(completion: @escaping (Result<ProductDetailsBasic, Error>) -> Void) {
-        let resource = Resource<ProductDetailsBasic>(path: "api/products")
+    func getProducts(completion: @escaping (Result<Products, Error>) -> Void) {
+        let resource = Resource<Products>(path: "api/products")
         api.load(resource, completion: completion)
     }
     
