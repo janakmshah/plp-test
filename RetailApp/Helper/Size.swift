@@ -16,17 +16,9 @@ struct Size {
     static let spacingExtraSmall: CGFloat = 4
     
     ///Returns CGFloat 8
-    static let spacingSmall: CGFloat = 8
-        
-    ///Returns CGFloat 12
-    static let spacingRegular: CGFloat = 12
+    static let spacingRegular: CGFloat = 8
     
-    ///Returns CGFloat 16
-    static let spacingLarge: CGFloat = 16
-
-    // MARK: - Paddings
-    
-    ///Returns CGFloat 20
-    static let standardEdgePadding: CGFloat = 20
+    ///Returns CGFloat 25
+    static let spacingLarge: CGFloat = 25
     
 }

@@ -15,8 +15,8 @@ class TestViewController: UIViewController {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         flowLayout.scrollDirection = .vertical
-        flowLayout.minimumInteritemSpacing = Size.spacingSmall
-        flowLayout.minimumLineSpacing = Size.spacingSmall
+        flowLayout.minimumInteritemSpacing = Size.spacingRegular
+        flowLayout.minimumLineSpacing = Size.spacingLarge
         
         return UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
     }()
@@ -34,7 +34,7 @@ class TestViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: Size.spacingSmall, bottom: 0, right: Size.spacingSmall)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: Size.spacingRegular, bottom: 0, right: Size.spacingRegular)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .white
         
@@ -63,7 +63,7 @@ extension TestViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProductCell.self), for: indexPath as IndexPath) as? ProductCell else { return UICollectionViewCell() }
-        cell.update(with: self.items[indexPath.row])
+        cell.update(with: self.items[indexPath.item])
         
         return cell
     }
@@ -120,17 +120,17 @@ class ProductCell: UICollectionViewCell {
         
         contentView.add(imageView, titleLabel, priceLabel)
         imageView.pinTo(top: 0, left: 0, right: 0)
-        let imageHeightRatio = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1.5)
+        let imageHeightRatio = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1.3)
         imageHeightRatio.priority = UILayoutPriority(999)
         imageHeightRatio.isActive = true
         
         titleLabel.pinTo(left: 0, right: 0)
-        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Size.spacingSmall).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Size.spacingRegular).isActive = true
         
-        priceLabel.pinTo(bottom: 25, left: 0, right: 0)
-        priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Size.spacingSmall).isActive = true
+        priceLabel.pinTo(bottom: 0, left: 0, right: 0)
+        priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Size.spacingRegular).isActive = true
         
-        let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: (UIScreen.main.bounds.width / 2) - (Size.spacingSmall * 1.5))
+        let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: (UIScreen.main.bounds.width / 2) - (Size.spacingRegular * 1.5))
         widthConstraint.priority = UILayoutPriority(999)
         widthConstraint.isActive = true
         
@@ -139,7 +139,6 @@ class ProductCell: UICollectionViewCell {
     func update(with productDetails: ProductDetailsBasic) {
         titleLabel.text = productDetails.name
         priceLabel.attributedText = PriceFormatterImplementation().formatPrice(productDetails.price)
-        backgroundColor = UIColor.cyan
         
         // First check cache
         if let cachedImage = ImageCache.fetch(for: productDetails.imageKey) {
