@@ -140,19 +140,11 @@ class ProductCell: UICollectionViewCell {
         titleLabel.text = productDetails.name
         priceLabel.attributedText = PriceFormatterImplementation().formatPrice(productDetails.price)
         
-        // First check cache
-        if let cachedImage = ImageCache.fetch(for: productDetails.imageKey) {
-            imageView.image = cachedImage
-            return
-        }
-        
-        // If nothing in cache, load from remote
         imageView.image = UIImage(named: "Placeholder")
         ImageServiceImplementation(api: API(urlSession: URLSession(configuration: .default), baseURL: URL(string: "http://interview-tech-testing.herokuapp.com")!)).downloadImage(key: productDetails.imageKey) { [weak self] (result) in
             switch result {
             case .value(let downloadedImage):
                 self?.imageView.image = downloadedImage
-                ImageCache.cache(downloadedImage, for: productDetails.imageKey) // Save to cache
             case .error(let error):
                 self?.imageView.image = UIImage(named: "Placeholder")
                 print(error)

@@ -10,22 +10,24 @@ import UIKit
 
 // Reduced uneccesary image requests
 struct ImageCache {
+
+    static private let concurrentImageCacheQueue = DispatchQueue(label: "com.marksandspencer.technical-test.RetailApp.image.cache.queue", attributes: .concurrent)
     
     // Cleared on app quit
-    static var session = [String: UIImage]()
+    static private var session = [String: UIImage]()
     
-    static func fetch(for id: String) -> UIImage? {
-        
+    static internal func fetch(for id: String) -> UIImage? {
         // Check session cache
-        return session[id]
-        
+        concurrentImageCacheQueue.sync {
+            return session[id]
+        }
     }
     
-    static func cache(_ image: UIImage, for id: String) {
-        
+    static internal func cache(_ image: UIImage, for id: String) {
         // Write to session cache
-        session[id] = image
-        
+        concurrentImageCacheQueue.async(flags: .barrier) {
+            session[id] = image
+        }
     }
     
 }
