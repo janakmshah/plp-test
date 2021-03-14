@@ -47,6 +47,7 @@
 		7F192BCD25FE60FE00A0171F /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BCC25FE60FE00A0171F /* AppCoordinator.swift */; };
 		7F192BD325FE61B900A0171F /* ProductListingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BD225FE61B900A0171F /* ProductListingsViewController.swift */; };
 		7F192BD825FE61DC00A0171F /* ProductListingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BD725FE61DC00A0171F /* ProductListingsViewModel.swift */; };
+		7F192BE225FEB84F00A0171F /* OffersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BE125FEB84F00A0171F /* OffersService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		7F192BCC25FE60FE00A0171F /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		7F192BD225FE61B900A0171F /* ProductListingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListingsViewController.swift; sourceTree = "<group>"; };
 		7F192BD725FE61DC00A0171F /* ProductListingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListingsViewModel.swift; sourceTree = "<group>"; };
+		7F192BE125FEB84F00A0171F /* OffersService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffersService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 				30590CAB2211BA4300FE716E /* ImageService.swift */,
 				30C4F5E421F27BBD0042865A /* ProductDetailsService.swift */,
 				7F192B9C25FD67E700A0171F /* ProductsService.swift */,
+				7F192BE125FEB84F00A0171F /* OffersService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F192BD325FE61B900A0171F /* ProductListingsViewController.swift in Sources */,
+				7F192BE225FEB84F00A0171F /* OffersService.swift in Sources */,
 				304698AB21F0D7C50056504A /* Result.swift in Sources */,
 				7F192BB825FE16E100A0171F /* Size.swift in Sources */,
 				7F192BA125FD69D600A0171F /* ProductCell.swift in Sources */,

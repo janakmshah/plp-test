@@ -44,11 +44,34 @@ class ProductListingsViewModel {
     
     private func getProducts() {
         
-        productsService.getProducts { [weak self] result in
+        let group = DispatchGroup()
+        var downloadedProducts: Products?
+        
+        group.enter()
+        OffersServiceImplementation(api: API.defaultAPI).getOffers(for: User.current.id) { result in
             do {
-                self?.products = try result.unwrapped().products
+                User.current = User(userOffers: try result.unwrapped())
+                print(User.current.userOffers)
+                group.leave()
             } catch {
                 print(error.localizedDescription)
+            }
+        }
+        
+        group.enter()
+        productsService.getProducts { result in
+            do {
+                downloadedProducts = try result.unwrapped()
+                group.leave()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        group.notify(queue: DispatchQueue.global()) {
+            DispatchQueue.main.async {
+                guard let newProducts = downloadedProducts else { return }
+                self.products = newProducts.products
             }
         }
         
@@ -76,27 +99,9 @@ class ProductListingsViewModel {
         
         let offerIds: [String] = [] // e.g. ["2", "3", "5", "4"]
         
-        let availableBadgesString = "" // e.g. "loyalty:SLOTTED,BONUS||sale:PRIORITY_ACCESS,REDUCED"
-        
-        let availableBadgesInPriority: [String] = []
-        /* e.g.
-         [
-         "loyalty:SLOTTED,BONUS",
-         "sale:PRIORITY_ACCESS,REDUCED"
-         ]
-         */
-        
-        let prioritisedBadgeObjects: [Badge] = []
-        /* e.g.
-         [
-         [name: "loyalty", types: ["SLOTTED", "BONUS"],
-         [name: "sale", types: ["PRIORITY_ACCESS", "REDUCED"]
-         ]
-         */
-        
         let matchingOffers = userOffers.offers.filter { offerIds.contains($0.id) }
         
-        let displayOffer = prioritisedBadgeObjects.first { badge -> Bool in
+        let displayOffer = User.current.userOffers.availableBadges.first { badge -> Bool in
             for type in badge.types {
                 for offer in matchingOffers {
                     if offer.id == type {
@@ -112,9 +117,48 @@ class ProductListingsViewModel {
     }
 }
 
+struct User {
+    
+    let userOffers: UserOffers
+    let id = "1"
+    
+    static var current = User(userOffers: UserOffers())
+    
+}
+
 struct UserOffers: Codable {
     let availableBadges: [Badge]
     let offers: [Offer]
+    
+    init() {
+        self.availableBadges = []
+        self.offers = []
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.offers = try container.decode([Offer].self, forKey: .offers)
+        
+        // "loyalty:SLOTTED,BONUS||sale:PRIORITY_ACCESS,REDUCED"
+        let availableBadgesString = try container.decode(String.self, forKey: .availableBadges)
+        
+        /* [
+            "loyalty:SLOTTED,BONUS",
+            "sale:PRIORITY_ACCESS,REDUCED"
+         ] */
+        let availableBadgesArray = availableBadgesString.components(separatedBy: "||")
+        
+        /* [
+            [name: "loyalty", types: ["SLOTTED", "BONUS"],
+            [name: "sale", types: ["PRIORITY_ACCESS", "REDUCED"]
+         ] */
+        self.availableBadges = availableBadgesArray.map{
+            let components = $0.split(separator: ":")
+            return Badge(name: String(components[0]), types: components[1].components(separatedBy: ","))
+        }
+        
+    }
+    
 }
 
 struct Badge: Codable {
@@ -122,14 +166,6 @@ struct Badge: Codable {
     let types: [String]
 }
 
-/*
- "offers": [
- {
- "id": "6",
- "title": "Reductions!",
- "type": "REDUCED"
- }
- */
 struct Offer: Codable {
     let id: String
     let title: String
