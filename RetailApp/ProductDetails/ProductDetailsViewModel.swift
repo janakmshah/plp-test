@@ -30,7 +30,13 @@ class ProductDetailsViewModel {
     }
   }
 
-  init(productRequest: ProductRequest, listingImage: UIImage?, productDetailsService: ProductDetailsService, imageService: ImageService, priceFormatter: PriceFormatter = PriceFormatterImplementation(), informationFormatter: InformationFormatter = InformationFormatterImplementation()) {
+  init(productRequest: ProductRequest,
+       listingImage: UIImage?,
+       productDetailsService: ProductDetailsService = ProductDetailsServiceImplementation(api: API.defaultAPI),
+       imageService: ImageService = ImageServiceImplementation(api: API.defaultAPI),
+       priceFormatter: PriceFormatter = PriceFormatterImplementation(),
+       informationFormatter: InformationFormatter = InformationFormatterImplementation()) {
+    
     self.productDetailsService = productDetailsService
     self.priceFormatter = priceFormatter
     self.informationFormatter = informationFormatter
@@ -40,6 +46,7 @@ class ProductDetailsViewModel {
     self.information = Observable<String>("")
     self.image = Observable<UIImage>(listingImage ?? #imageLiteral(resourceName: "Placeholder"))
     getProduct(id: productRequest.id)
+    
   }
 
   private func updateObservables(productDetails: ProductDetails) {

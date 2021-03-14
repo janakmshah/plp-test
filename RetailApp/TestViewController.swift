@@ -73,7 +73,10 @@ extension TestViewController: UICollectionViewDataSource {
 extension TestViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("You selected cell #\(indexPath.item)!")
+        let product = items[indexPath.item]
+        let productDetailsVC = ProductDetailsViewController(viewModel: ProductDetailsViewModel(productRequest: product,
+                                                                                               listingImage: ImageCache.fetch(for: product.imageKey)))
+        self.navigationController?.pushViewController(productDetailsVC, animated: true)
     }
     
 }

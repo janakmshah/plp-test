@@ -13,7 +13,7 @@ import Foundation
  I decided to keep the two separate because then if once of the responses changes,
  it won't affect components where the other model is implemented
  */
-struct ProductDetailsBasic: Codable {
+struct ProductDetailsBasic: Codable, ProductRequest {
     let id: String
     let name: String
     let imageKey: String
