@@ -60,7 +60,6 @@ class ProductListingsViewModel {
         self.coordinator?.navigateToProductDetail(products[index])
     }
     
-    
     // MARK: - Update views
     
     private func updateObservables(products: [ProductDetailsBasic]) {
