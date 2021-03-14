@@ -39,6 +39,7 @@
 		7F192B9125FD652100A0171F /* Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192B9025FD652100A0171F /* Products.swift */; };
 		7F192B9725FD663600A0171F /* ProductDetailsBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192B9625FD663600A0171F /* ProductDetailsBasic.swift */; };
 		7F192B9D25FD67E700A0171F /* ProductsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192B9C25FD67E700A0171F /* ProductsService.swift */; };
+		7F192BAA25FE162900A0171F /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BA925FE162900A0171F /* Extension+UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		7F192B9025FD652100A0171F /* Products.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Products.swift; sourceTree = "<group>"; };
 		7F192B9625FD663600A0171F /* ProductDetailsBasic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsBasic.swift; sourceTree = "<group>"; };
 		7F192B9C25FD67E700A0171F /* ProductsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsService.swift; sourceTree = "<group>"; };
+		7F192BA925FE162900A0171F /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 		3046987421F0D55F0056504A /* RetailApp */ = {
 			isa = PBXGroup;
 			children = (
+				7F192BA825FE161300A0171F /* Extensions */,
 				304698A521F0D7020056504A /* API */,
 				303522712239287A00AB1973 /* Services */,
 				306805AA21F22FB100B99BB8 /* Helper */,
@@ -256,6 +259,14 @@
 				301581462215A6AF00199803 /* Observable.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		7F192BA825FE161300A0171F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7F192BA925FE162900A0171F /* Extension+UIView.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -397,6 +408,7 @@
 				306805A721F22A7200B99BB8 /* ProductInformation.swift in Sources */,
 				7F192B9725FD663600A0171F /* ProductDetailsBasic.swift in Sources */,
 				301581472215A6AF00199803 /* Observable.swift in Sources */,
+				7F192BAA25FE162900A0171F /* Extension+UIView.swift in Sources */,
 				7F192B9125FD652100A0171F /* Products.swift in Sources */,
 				3068059E21F21FC100B99BB8 /* Price.swift in Sources */,
 				3046987621F0D55F0056504A /* AppDelegate.swift in Sources */,
