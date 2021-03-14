@@ -2,9 +2,10 @@ import Foundation
 import UIKit
 
 protocol ProductRequest {
-  var id: String { get }
-  var price: Price { get }
-  var name: String { get }
+    var id: String { get }
+    var price: Price { get }
+    var name: String { get }
+    var imageKey: String { get }
 }
 
 class ProductDetailsViewModel {
@@ -31,7 +32,6 @@ class ProductDetailsViewModel {
   }
 
   init(productRequest: ProductRequest,
-       listingImage: UIImage?,
        productDetailsService: ProductDetailsService = ProductDetailsServiceImplementation(api: API.defaultAPI),
        imageService: ImageService = ImageServiceImplementation(api: API.defaultAPI),
        priceFormatter: PriceFormatter = PriceFormatterImplementation(),
@@ -44,7 +44,7 @@ class ProductDetailsViewModel {
     self.price = Observable<NSAttributedString>(priceFormatter.formatPrice(productRequest.price))
     self.name = Observable<String>(productRequest.name)
     self.information = Observable<String>("")
-    self.image = Observable<UIImage>(listingImage ?? #imageLiteral(resourceName: "Placeholder"))
+    self.image = Observable<UIImage>(ImageCache.fetch(for: productRequest.imageKey) ?? #imageLiteral(resourceName: "Placeholder"))
     getProduct(id: productRequest.id)
     
   }
