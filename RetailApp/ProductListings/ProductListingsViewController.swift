@@ -43,6 +43,7 @@ class ProductListingsViewController: UIViewController {
         self.navigationItem.largeTitleDisplayMode = .always
         self.navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = .white
+        setupCollectionView()
         bind()
     }
     
