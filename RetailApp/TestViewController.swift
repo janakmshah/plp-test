@@ -10,31 +10,25 @@ import UIKit
 
 class TestViewController: UIViewController {
     
-    var items = ["1", "2 long string should go multiline hopefully yes please", "3", "4", "5", "6", "7", "8", "9", "10 long string should go multiline hopefully yes please", "11", "12", "13", "14", "15 long string should go multiline hopefully yes please", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32 long string should go multiline hopefully yes please", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48"]
-        
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = .white
-        
-        ProductsServiceImplementation(api: API(urlSession: URLSession(configuration: .default), baseURL: URL(string: "http://admin:password@interview-tech-testing.herokuapp.com")!)).getProducts { (result) in
-            switch result {
-            case .value(let products):
-                //print(products)
-            break
-            case .error(let error):
-                fatalError(error.localizedDescription)
-            }
-        }
-                
+    var items = [ProductDetailsBasic]()
+    let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumInteritemSpacing = Size.spacingSmall
         flowLayout.minimumLineSpacing = Size.spacingSmall
         
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
-                
+        return UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        title = "Tops"
+        self.navigationItem.largeTitleDisplayMode = .always
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        view.backgroundColor = .white
+        
         view.add(collectionView)
         collectionView.pinTo(top: 0, bottom: 0, left: 0, right: 0)
         
@@ -45,6 +39,16 @@ class TestViewController: UIViewController {
         collectionView.backgroundColor = .white
         
         collectionView.register(ProductCell.self, forCellWithReuseIdentifier: String(describing: ProductCell.self))
+        
+        ProductsServiceImplementation(api: API(urlSession: URLSession(configuration: .default), baseURL: URL(string: "http://admin:password@interview-tech-testing.herokuapp.com")!)).getProducts { [weak self] (result) in
+            switch result {
+            case .value(let products):
+                self?.items = products.products
+                self?.collectionView.reloadData()
+            case .error(let error):
+                fatalError(error.localizedDescription)
+            }
+        }
         
     }
 
@@ -59,7 +63,8 @@ extension TestViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProductCell.self), for: indexPath as IndexPath) as? ProductCell else { return UICollectionViewCell() }
-        cell.titleLabel.text = self.items[indexPath.row]
+        cell.titleLabel.text = self.items[indexPath.row].name
+        cell.priceLabel.attributedText = PriceFormatterImplementation().formatPrice(self.items[indexPath.row].price)
         cell.backgroundColor = UIColor.cyan
         
         return cell
@@ -79,7 +84,21 @@ class ProductCell: UICollectionViewCell {
     
     // MARK: - Properties
     
-    let titleLabel = UILabel()
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let image = UIImageView()
+    
+    let priceLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 15)
+        return label
+    }()
     
     // MARK: - Initialisers
     
@@ -95,10 +114,23 @@ class ProductCell: UICollectionViewCell {
     // MARK: - Layout
 
     func setInitialLayout() {
-        self.contentView.add(self.titleLabel)
-        self.titleLabel.pinTo(top: 0, bottom: 0, left: 0, right: 0)
-        self.titleLabel.numberOfLines = 0
-        self.titleLabel.pinWidth((UIScreen.main.bounds.width / 2) - (Size.spacingSmall*1.5))
+        
+        contentView.add(image, titleLabel, priceLabel)
+        image.pinTo(top: 0, left: 0, right: 0)
+        let imageHeightRatio = image.heightAnchor.constraint(equalTo: image.widthAnchor, multiplier: 1.5)
+        imageHeightRatio.priority = .defaultHigh
+        imageHeightRatio.isActive = true
+        
+        titleLabel.pinTo(left: 0, right: 0)
+        titleLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: Size.spacingSmall).isActive = true
+        
+        priceLabel.pinTo(bottom: 25, left: 0, right: 0)
+        priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Size.spacingSmall).isActive = true
+        
+        let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: (UIScreen.main.bounds.width / 2) - (Size.spacingSmall * 1.5))
+        widthConstraint.priority = .defaultHigh
+        widthConstraint.isActive = true
+
     }
     
 }
