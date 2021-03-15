@@ -1,5 +1,5 @@
 //
-//  ProductCell.swift
+//  ProductListingCell.swift
 //  RetailApp
 //
 //  Created by Janak Shah on 13/03/2021.
@@ -23,9 +23,11 @@ struct ProductCellDisplayableImplementation: ProductCellDisplayable {
     let badgeKey: String?
 }
 
-class ProductCell: UICollectionViewCell {
+class ProductListingCell: UICollectionViewCell {
     
     // MARK: - Properties
+    
+    private var viewModel: ProductListingViewModel?
     
     let badgeHeight: CGFloat = 26
     
@@ -97,38 +99,38 @@ class ProductCell: UICollectionViewCell {
         
     }
     
-    // MARK: - Update view
+    // MARK: - Bindings
     
-    func update(with productDetails: ProductCellDisplayable) {
-        titleLabel.text = productDetails.title
-        priceLabel.attributedText = productDetails.price
-        
-        //TODO: API calls should be in a ViewModel
-        imageView.image = UIImage(named: "Placeholder")
-        ImageServiceImplementation(api: API.defaultAPI).downloadImage(key: productDetails.imageKey) { [weak self] (result) in
-            switch result {
-            case .value(let downloadedImage):
-                self?.imageView.image = downloadedImage
-            case .error:
-                self?.imageView.image = UIImage(named: "Placeholder")
+    func update(with viewModel: ProductListingViewModel) {
+        self.viewModel = viewModel
+        bind()
+    }
+    
+    private func bind() {
+        viewModel?.badge.bind(self) { [weak self] value in
+            guard let badgeImage = value else {
+                self?.badgeView.isHidden = true
+                return
             }
+            self?.badgeView.image = badgeImage
+            self?.badgeView.isHidden = false
         }
-                
-        badgeView.isHidden = true
-        
-        guard let badgeKey = productDetails.badgeKey else { return }
-        
-        ImageServiceImplementation(api: API.defaultAPI).downloadImage(key: badgeKey + "_icon") { [weak self] (result) in
-            guard let self = self else { return }
-            switch result {
-            case .value(let downloadedImage):
-                self.badgeView.image = downloadedImage
-                self.badgeWidthConstraint?.constant = (self.badgeHeight / downloadedImage.size.height) * downloadedImage.size.width
-                self.badgeView.isHidden = false
-            case .error:
-                self.badgeView.isHidden = true
-            }
+        viewModel?.image.bind(self) { [weak self] value in
+            self?.imageView.image = value
         }
+        viewModel?.title.bind(self) { [weak self] value in
+            self?.titleLabel.text = value
+        }
+        viewModel?.price.bind(self) { [weak self] value in
+            self?.priceLabel.attributedText = value
+        }
+    }
+    
+    deinit {
+      viewModel?.title.unbind(self)
+      viewModel?.price.unbind(self)
+      viewModel?.badge.unbind(self)
+      viewModel?.image.unbind(self)
     }
     
 }

@@ -56,7 +56,7 @@ class ProductListingsViewController: UIViewController {
     private func setupCollectionView() {
         view.add(collectionView)
         collectionView.pinTo(top: 0, bottom: 0, left: 0, right: 0)
-        collectionView.register(ProductCell.self, forCellWithReuseIdentifier: String(describing: ProductCell.self))
+        collectionView.register(ProductListingCell.self, forCellWithReuseIdentifier: String(describing: ProductListingCell.self))
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsets(top: 0, left: Size.spacingRegular, bottom: 0, right: Size.spacingRegular)
@@ -80,9 +80,14 @@ extension ProductListingsViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProductCell.self), for: indexPath as IndexPath) as? ProductCell else { return UICollectionViewCell() }
-        cell.update(with: self.products[indexPath.item])
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProductListingCell.self), for: indexPath as IndexPath) as? ProductListingCell else { return UICollectionViewCell() }
+        cell.update(with: ProductListingViewModel(displayDetails: self.products[indexPath.item]))
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let productListingCell = cell as? ProductListingCell else { return }
+        productListingCell
     }
     
 }
