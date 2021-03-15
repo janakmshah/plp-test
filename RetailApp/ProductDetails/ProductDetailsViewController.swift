@@ -20,6 +20,7 @@ class ProductDetailsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     navigationItem.largeTitleDisplayMode = .never
+    view.accessibilityIdentifier = "product_details_view_controller_view"
     bind()
   }
 

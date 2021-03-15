@@ -51,6 +51,7 @@ class ProductListingCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
         setInitialLayout()
+        accessibilityIdentifier = "product_item"
     }
     
     required init?(coder: NSCoder) {
