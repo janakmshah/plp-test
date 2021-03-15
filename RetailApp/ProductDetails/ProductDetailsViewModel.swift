@@ -19,8 +19,6 @@ class ProductDetailsViewModel {
   let image: Observable<UIImage>
   let price: Observable<NSAttributedString>
 
-  private var productImage: UIImage?
-
   private var productDetails: ProductDetails? {
     didSet {
       guard let value = productDetails else {
@@ -66,10 +64,6 @@ class ProductDetailsViewModel {
   }
 
   private func downloadProductImage(productDetails: ProductDetails) {
-    guard productImage == nil else {
-      return
-    }
-
     imageService.downloadImage(key: productDetails.imageKey) { [weak self] result in
       guard let strongSelf = self else {
         return
