@@ -87,7 +87,7 @@ extension ProductListingsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let productListingCell = cell as? ProductListingCell else { return }
-        productListingCell
+        productListingCell.unbind()
     }
     
 }

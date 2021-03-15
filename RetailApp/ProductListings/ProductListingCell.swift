@@ -108,12 +108,14 @@ class ProductListingCell: UICollectionViewCell {
     
     private func bind() {
         viewModel?.badge.bind(self) { [weak self] value in
+            guard let self = self else { return }
             guard let badgeImage = value else {
-                self?.badgeView.isHidden = true
+                self.badgeView.isHidden = true
                 return
             }
-            self?.badgeView.image = badgeImage
-            self?.badgeView.isHidden = false
+            self.badgeView.image = badgeImage
+            self.badgeView.isHidden = false
+            self.badgeWidthConstraint?.constant = (self.badgeHeight / badgeImage.size.height) * badgeImage.size.width
         }
         viewModel?.image.bind(self) { [weak self] value in
             self?.imageView.image = value
@@ -126,11 +128,15 @@ class ProductListingCell: UICollectionViewCell {
         }
     }
     
+    func unbind() {
+        viewModel?.title.unbind(self)
+        viewModel?.price.unbind(self)
+        viewModel?.badge.unbind(self)
+        viewModel?.image.unbind(self)
+    }
+    
     deinit {
-      viewModel?.title.unbind(self)
-      viewModel?.price.unbind(self)
-      viewModel?.badge.unbind(self)
-      viewModel?.image.unbind(self)
+        unbind()
     }
     
 }

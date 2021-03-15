@@ -29,7 +29,7 @@ class ProductListingViewModel {
         self.image = Observable<UIImage?>(ImageCache.fetch(for: displayDetails.imageKey) ?? #imageLiteral(resourceName: "Placeholder"))
         self.badge = Observable<UIImage?>(nil)
         
-        //downloadImage(key: displayDetails.imageKey, for: image)
+        downloadImage(key: displayDetails.imageKey, for: image)
         
         guard let badgeKey = displayDetails.badgeKey else {
             badge.value = nil
