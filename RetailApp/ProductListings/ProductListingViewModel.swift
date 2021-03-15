@@ -8,7 +8,23 @@
 
 import UIKit
 
+protocol ProductCellDisplayable {
+    var title: String { get }
+    var imageKey: String { get }
+    var price: NSAttributedString { get }
+    var offerIds: [String] { get }
+}
+
+struct ProductCellDisplayableImplementation: ProductCellDisplayable {
+    let title: String
+    let imageKey: String
+    let price: NSAttributedString
+    let offerIds: [String]
+}
+
 class ProductListingViewModel {
+    
+    // MARK: - Properties
     
     let title: Observable<String>
     let price: Observable<NSAttributedString>
@@ -17,6 +33,8 @@ class ProductListingViewModel {
     
     private let priceFormatter: PriceFormatter
     private let imageService: ImageService
+    
+    // MARK: - Initialisers
     
     init(displayDetails: ProductCellDisplayable,
          imageService: ImageService = ImageServiceImplementation(api: API.defaultAPI),
@@ -31,19 +49,45 @@ class ProductListingViewModel {
         
         downloadImage(key: displayDetails.imageKey, for: image)
         
-        guard let badgeKey = displayDetails.badgeKey else {
+        guard let badgeKey = badgeToDisplay(offerIds: displayDetails.offerIds) else {
             badge.value = nil
             return
         }
         downloadImage(key: badgeKey + "_icon", for: badge)
     }
     
+    // MARK: - Fetch data
+    
     private func downloadImage(key: String, for observable: Observable<UIImage?>) {
         imageService.downloadImage(key: key) { result in
-            if let image = try? result.unwrapped() {
-                observable.value = image
+            switch result {
+            case .value(let value):
+                observable.value = value
+            case .error(let error):
+                debugPrint(error)
             }
         }
+    }
+    
+    // MARK: - Helpers
+    
+    private func badgeToDisplay(offerIds: [String]) -> String? {
+                
+        let matchingOffers = User.current.userOffers.offers.filter { offerIds.contains($0.id) }
+        
+        let displayOffer = User.current.userOffers.availableBadges.first { badge -> Bool in
+            
+            for type in badge.types {
+                for offer in matchingOffers where offer.type == type {
+                    return true
+                }
+            }
+            
+            return false
+        }
+        
+        return displayOffer?.name
+        
     }
     
 }

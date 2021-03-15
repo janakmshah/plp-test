@@ -8,21 +8,6 @@
 
 import UIKit
 
-//TODO: Move to ViewModel
-protocol ProductCellDisplayable {
-    var title: String { get }
-    var imageKey: String { get }
-    var price: NSAttributedString { get }
-    var badgeKey: String? { get }
-}
-
-struct ProductCellDisplayableImplementation: ProductCellDisplayable {
-    let title: String
-    let imageKey: String
-    let price: NSAttributedString
-    let badgeKey: String?
-}
-
 class ProductListingCell: UICollectionViewCell {
     
     // MARK: - Properties

@@ -98,29 +98,8 @@ class ProductListingsViewModel {
             ProductCellDisplayableImplementation(title: $0.name,
                                                  imageKey: $0.imageKey,
                                                  price: priceFormatter.formatPrice($0.price),
-                                                 badgeKey: badgeToDisplay(offerIds: $0.offerIds))
+                                                 offerIds: $0.offerIds)
         }
     }
     
-    // MARK: - Helpers
-    
-    // TODO: This happens for all the listings at once, better to move to ViewModel
-    private func badgeToDisplay(offerIds: [String]) -> String? {
-                
-        let matchingOffers = User.current.userOffers.offers.filter { offerIds.contains($0.id) }
-        
-        let displayOffer = User.current.userOffers.availableBadges.first { badge -> Bool in
-            
-            for type in badge.types {
-                for offer in matchingOffers where offer.type == type {
-                    return true
-                }
-            }
-            
-            return false
-        }
-        
-        return displayOffer?.name
-        
-    }
 }

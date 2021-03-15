@@ -58,7 +58,7 @@ class ProductDetailsViewModel {
       do {
         self?.productDetails = try result.unwrapped()
       } catch {
-        print(error.localizedDescription)
+        debugPrint(error.localizedDescription)
       }
     }
   }

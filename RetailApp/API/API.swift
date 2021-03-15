@@ -32,9 +32,8 @@ class API {
         urlRequest.httpMethod = resource.method
         urlRequest.httpBody = resource.body
         
-        //TODO: Hardcoding values here seem wrong
-        let username = "admin"
-        let password = "password"
+        let username = User.current.username
+        let password = User.current.password
         let loginString = "\(username):\(password)"
         guard let loginData = loginString.data(using: String.Encoding.utf8) else { return }
         urlRequest.httpMethod = "GET"
