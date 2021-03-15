@@ -12,9 +12,9 @@ struct UserOffers: Codable {
     let availableBadges: [Badge]
     let offers: [Offer]
     
-    init() {
-        self.availableBadges = []
-        self.offers = []
+    init(availableBadges: [Badge] = [], offers: [Offer] = []) {
+        self.availableBadges = availableBadges
+        self.offers = offers
     }
     
     init(from decoder: Decoder) throws {

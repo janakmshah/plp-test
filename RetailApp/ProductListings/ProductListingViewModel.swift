@@ -49,7 +49,8 @@ class ProductListingViewModel {
         
         downloadImage(key: displayDetails.imageKey, for: image)
         
-        guard let badgeKey = badgeToDisplay(offerIds: displayDetails.offerIds) else {
+        guard let badgeKey = BadgeIdentifer.badgeToDisplay(userOffers: User.current.userOffers,
+                                                           offerIds: displayDetails.offerIds) else {
             badge.value = nil
             return
         }
@@ -67,27 +68,6 @@ class ProductListingViewModel {
                 debugPrint(error)
             }
         }
-    }
-    
-    // MARK: - Helpers
-    
-    private func badgeToDisplay(offerIds: [String]) -> String? {
-                
-        let matchingOffers = User.current.userOffers.offers.filter { offerIds.contains($0.id) }
-        
-        let displayOffer = User.current.userOffers.availableBadges.first { badge -> Bool in
-            
-            for type in badge.types {
-                for offer in matchingOffers where offer.type == type {
-                    return true
-                }
-            }
-            
-            return false
-        }
-        
-        return displayOffer?.name
-        
     }
     
 }
