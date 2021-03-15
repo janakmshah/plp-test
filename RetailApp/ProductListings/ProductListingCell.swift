@@ -92,6 +92,12 @@ class ProductListingCell: UICollectionViewCell {
     }
     
     private func bind() {
+        viewModel?.title.bind(self) { [weak self] value in
+            self?.titleLabel.text = value
+        }
+        viewModel?.price.bind(self) { [weak self] value in
+            self?.priceLabel.attributedText = value
+        }
         viewModel?.badge.bind(self) { [weak self] value in
             guard let self = self else { return }
             guard let badgeImage = value else {
@@ -104,12 +110,6 @@ class ProductListingCell: UICollectionViewCell {
         }
         viewModel?.image.bind(self) { [weak self] value in
             self?.imageView.image = value
-        }
-        viewModel?.title.bind(self) { [weak self] value in
-            self?.titleLabel.text = value
-        }
-        viewModel?.price.bind(self) { [weak self] value in
-            self?.priceLabel.attributedText = value
         }
     }
     

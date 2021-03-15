@@ -10,7 +10,7 @@ import Foundation
 
 /*
  Though the majority of these properties are shared with the ProductDetails model,
- I decided to keep the two separate because then if once of the responses changes,
+ I decided to keep the two models separate because if once of the responses changes,
  it won't affect components where the other model is implemented
  */
 struct ProductDetailsBasic: Codable, ProductRequest {

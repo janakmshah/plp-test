@@ -42,14 +42,3 @@ struct UserOffers: Codable {
     }
     
 }
-
-struct Badge: Codable {
-    let name: String
-    let types: [String]
-}
-
-struct Offer: Codable {
-    let id: String
-    let title: String
-    let type: String
-}

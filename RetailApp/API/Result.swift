@@ -87,6 +87,7 @@ public enum Result<Value, Error> {
   }
 }
 
+//TODO user this instead of switch
 extension Result where Error == Swift.Error {
   /// Unwraps the `Result` into a throwing expression.
   ///

@@ -48,6 +48,8 @@
 		7F192BD825FE61DC00A0171F /* ProductListingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BD725FE61DC00A0171F /* ProductListingsViewModel.swift */; };
 		7F192BE225FEB84F00A0171F /* OffersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F192BE125FEB84F00A0171F /* OffersService.swift */; };
 		7F762AE725FF638E0087DB8B /* ProductListingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F762AE625FF638E0087DB8B /* ProductListingViewModel.swift */; };
+		7F762AF025FFAF060087DB8B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F762AEF25FFAF060087DB8B /* Badge.swift */; };
+		7F762AF625FFAF130087DB8B /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F762AF525FFAF130087DB8B /* Offer.swift */; };
 		7F9B4DE725FEC645004E786B /* UserOffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B4DE625FEC645004E786B /* UserOffers.swift */; };
 		7F9B4DED25FEC8DF004E786B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B4DEC25FEC8DF004E786B /* User.swift */; };
 /* End PBXBuildFile section */
@@ -110,6 +112,8 @@
 		7F192BD725FE61DC00A0171F /* ProductListingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListingsViewModel.swift; sourceTree = "<group>"; };
 		7F192BE125FEB84F00A0171F /* OffersService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffersService.swift; sourceTree = "<group>"; };
 		7F762AE625FF638E0087DB8B /* ProductListingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListingViewModel.swift; sourceTree = "<group>"; };
+		7F762AEF25FFAF060087DB8B /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
+		7F762AF525FFAF130087DB8B /* Offer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		7F9B4DE625FEC645004E786B /* UserOffers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOffers.swift; sourceTree = "<group>"; };
 		7F9B4DEC25FEC8DF004E786B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -271,7 +275,7 @@
 				3068059B21F21F9900B99BB8 /* ProductDetails.swift */,
 				306805A621F22A7200B99BB8 /* ProductInformation.swift */,
 				3068059D21F21FC100B99BB8 /* Price.swift */,
-				7F9B4DE625FEC645004E786B /* UserOffers.swift */,
+				7F762AEE25FFAEF70087DB8B /* UserOffers */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -309,10 +313,20 @@
 			children = (
 				7F192BD725FE61DC00A0171F /* ProductListingsViewModel.swift */,
 				7F192BD225FE61B900A0171F /* ProductListingsViewController.swift */,
-				7F192BA025FD69D600A0171F /* ProductListingCell.swift */,
 				7F762AE625FF638E0087DB8B /* ProductListingViewModel.swift */,
+				7F192BA025FD69D600A0171F /* ProductListingCell.swift */,
 			);
 			path = ProductListings;
+			sourceTree = "<group>";
+		};
+		7F762AEE25FFAEF70087DB8B /* UserOffers */ = {
+			isa = PBXGroup;
+			children = (
+				7F9B4DE625FEC645004E786B /* UserOffers.swift */,
+				7F762AEF25FFAF060087DB8B /* Badge.swift */,
+				7F762AF525FFAF130087DB8B /* Offer.swift */,
+			);
+			path = UserOffers;
 			sourceTree = "<group>";
 		};
 		7F9B4DF025FEC8E9004E786B /* User */ = {
@@ -449,6 +463,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F192BD325FE61B900A0171F /* ProductListingsViewController.swift in Sources */,
+				7F762AF025FFAF060087DB8B /* Badge.swift in Sources */,
 				7F192BE225FEB84F00A0171F /* OffersService.swift in Sources */,
 				304698AB21F0D7C50056504A /* Result.swift in Sources */,
 				7F192BB825FE16E100A0171F /* Size.swift in Sources */,
@@ -469,6 +484,7 @@
 				30590CAC2211BA4300FE716E /* ImageService.swift in Sources */,
 				306805A721F22A7200B99BB8 /* ProductInformation.swift in Sources */,
 				7F192B9725FD663600A0171F /* ProductDetailsBasic.swift in Sources */,
+				7F762AF625FFAF130087DB8B /* Offer.swift in Sources */,
 				7F9B4DED25FEC8DF004E786B /* User.swift in Sources */,
 				301581472215A6AF00199803 /* Observable.swift in Sources */,
 				7F192BC825FE3B1D00A0171F /* SessionImageCache.swift in Sources */,
