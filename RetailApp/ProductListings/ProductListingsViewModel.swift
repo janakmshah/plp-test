@@ -46,26 +46,24 @@ class ProductListingsViewModel {
         
         let group = DispatchGroup()
         var downloadedProducts: Products?
-        var error: Error?
+        var groupError: Error?
         
         group.enter()
         OffersServiceImplementation(api: API.defaultAPI).getOffers(for: User.current.id) { result in
-            switch result {
-            case .value(let value):
-                User.current = User(userOffers: value)
-            case .error(let getOffersError):
-                error = getOffersError
+            do {
+                User.current = User(userOffers: try result.unwrapped())
+            } catch {
+                groupError = error
             }
             group.leave()
         }
         
         group.enter()
         productsService.getProducts { result in
-            switch result {
-            case .value(let value):
-                downloadedProducts = value
-            case .error(let getProductsError):
-                error = getProductsError
+            do {
+                downloadedProducts = try result.unwrapped()
+            } catch {
+                groupError = error
             }
             group.leave()
         }
@@ -74,7 +72,7 @@ class ProductListingsViewModel {
             DispatchQueue.main.async {
                 guard let newProducts = downloadedProducts else { return }
                 
-                if let error = error {
+                if let error = groupError {
                     self.coordinator?.show(error: error)
                     return
                 }

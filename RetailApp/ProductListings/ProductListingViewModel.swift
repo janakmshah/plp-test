@@ -61,10 +61,9 @@ class ProductListingViewModel {
     
     private func downloadImage(key: String, for observable: Observable<UIImage?>) {
         imageService.downloadImage(key: key) { result in
-            switch result {
-            case .value(let value):
-                observable.value = value
-            case .error(let error):
+            do {
+                observable.value = try result.unwrapped()
+            } catch {
                 debugPrint(error)
             }
         }
