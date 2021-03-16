@@ -43,7 +43,7 @@ class ProductListingViewModel {
         self.priceFormatter = priceFormatter
         self.imageService = imageService
         self.price = Observable<NSAttributedString>(displayDetails.price)
-        self.title = Observable<String>("")
+        self.title = Observable<String>(displayDetails.title)
         self.image = Observable<UIImage?>(ImageCache.fetch(for: displayDetails.imageKey) ?? #imageLiteral(resourceName: "Placeholder"))
         self.badge = Observable<UIImage?>(nil)
         
