@@ -168,6 +168,7 @@
 				3025808A223BC1810073704D /* PriceFormatterTests.swift */,
 				3018648E223BCEF80026CED6 /* InformationFormatterTests.swift */,
 				30186492223BD01E0026CED6 /* ObservableTests.swift */,
+				7F902ECB260011C6006C4A03 /* BadgeIdentiferTests.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -364,7 +365,6 @@
 			isa = PBXGroup;
 			children = (
 				7F902EC52600095E006C4A03 /* ProductListingsViewModelTests.swift */,
-				7F902ECB260011C6006C4A03 /* BadgeIdentiferTests.swift */,
 			);
 			path = ProductListings;
 			sourceTree = "<group>";

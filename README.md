@@ -1,105 +1,78 @@
 # ios-test
 
-## API
+### Changing user id
 
-The API has basic authentication. The username is `admin` and the password is `password`
+To try different user ids the `var id` in `User.swift` can be modified.
 
-The base url is:
-`http://admin:password@interview-tech-testing.herokuapp.com`
+### My approach
 
-Hitting this endpoint will confirm the status of the service, you should see "Service is running"
+I've never done a test before which had such a complete starter project. It makes a lot of sense because I can show how I would add a feature to an existing codebase. Which similar to the tasks I would be doing in the role.
 
-### `/api/products`
+Initially when I was reading the instructions, and hadn't yet opened the project, I was planning to use SwiftUI, Combine etc. But, of course, the project supports a minimum iOS12 (which also meant no UICompositionalLayout) so I used the frameworks available to iOS12.
 
-__Request:__
+The starter project's existing binding framework (Observable) is nice and elegant. It was easy to use, understand and implement.
 
-```sh
-curl -X GET http://admin:password@interview-tech-testing.herokuapp.com/api/products
+To me it doesn't make sense to have multiple binding frameworks, or even different syntactic styles, in one codebase. It makes reading the code confusing if the same thing is done in 3 different ways all over the place. So I decided to make my code look like the starter as much as possible, on the assumtion that the iOS team had agreed this was the style to follow and it didn't require any refactoring.
+
+I took the approach that this was a feature given to me to work on, rather than a tech test, and, in doing that, I tidied up some of the existing code. E.g.
+* Fixed a deprecated method `Date(bytes: value)` is deprecated in favour of `Data(value)`
+* Removed the `productImage` property from the `ProductDetailsViewController` as it was always `nil` and didn't seem to be used
+* I ran Swiftlint to ensure the formatting and syntax was all consistent. I find a linter works best when the entire iOS team agree on what they want their format and syntax to look like, and then customise a linter to enforce what the team agree.
+
+### Caching
+
+I decided to add a simple Cache to the image service which resets every App session.
+It is a static Dictionary which holds downloaded images as values, using their filenames as keys.
+To make the cache thread-safe, I used a GCD concurrent Dispatch Queue with a `.barrier` flag which turns on mutual exclusivity.
+
+### DispatchGroup
+
+I used a DispatchGroup in the ProductListingsViewModel to avoid having a completion within a completion.
+As there are only 2, relatively fast, network calls here it's not strictly neccessary. But good practice.
+
+### App Coordinator
+
+I created an App Coordinator which is resonsible for navigating between view controllers.
+I like this pattern as it takes one further responsiblity away from VCs.
+VCs no longer need to have any information about the other VCs in the app.
+
+### Custom Coding
+
+I wrote a custom Decoder for the availableBadges model to parse it from the raw String received from the backend into a nicer model object:
+
 ```
-
-__Response:__
-
-```json
-{
-    "products": [
-        {
-            "id": "2",
-            "image_key": "SD_01_T38_1502_Y0_X_EC_0",
-            "name": "Round Neck Jumper",
-            "offer_ids": [
-                "2",
-                "3",
-                "5",
-                "4"
-            ],
-            "price": {
-                "currency_code": "GBP",
-                "current_price": 1250,
-                "original_price": 1400
-            }
-        }
-    ]
+"loyalty:SLOTTED,BONUS||sale:PRIORITY_ACCESS,REDUCED"
+to
+struct Badge: Codable {
+    let name: String
+    let types: [String]
 }
+
+The logic is contained in UserOffers.swift
 ```
 
-### `/api/product/{n}`
+### Tests
 
-__Request:__
+I've included tests for the following:
+* ProductListingsViewModel (For the ProductListingsViewController)
+* BadgeIdentifer (logic which decides which badge should be shown)
+* A UI Test which taps a cell and checks the ProductDetailsVC is navigated to
 
-```sh
-curl -X GET http://admin:password@interview-tech-testing.herokuapp.com/api/product/2
-```
+Given more time I would add tests for:
+* ProductListingViewModel (For the ProductListingCell)
+* AppCoordinator
+• Image Cache
+• Available Badges decoding
 
-__Response:__
+### Images not showing up
 
-```json
-{
-    "id": "2",
-    "image_key": "SD_01_T38_1502_QA_X_EC_90",
-    "information": [
-        {
-            "section_text": "A chic and versatile addition to any wardrobe, this long sleeved jumper is wonderfully soft to give your outfits as much style as comfort and has been treated with our StaySoft™ technology so it stays that way even after repeated washes. With ribbed trims and a comfy regular fit, this women’s jumper is sure to become your new staple.\r\n\r\nCare and composition\r\nComposition\r\n100% acrylic\r\nCare instructions\r\nMachine washable even at 30º\r\nTumble dry\r\nKeep away from fire and flames\r\n\r\nItem details\r\nModel Height: 5ft 9\"/175cm\r\nModel is wearing size: 8\r\n\r\nFit and style\r\nProduct Style: Jumpers\r\nRegular fit\r\nNeck to hem length: 61cm\r\nThe length measurement above relates to a size 12 regular. Length will vary slightly according to size\r\nRibbed trim\r\n",
-            "section_title": ""
-        }
-    ],
-    "name": "Round Neck Jumper",
-    "price": {
-        "currency_code": "GBP",
-        "current_price": 1250,
-        "original_price": 1400
-    }
-}
-```
+I noticed that occassionally the images wouldn't load and I was getting 503s from the response.
+I manually tried to hit the url and saw the Heroku error screen below.
+So if some images don't show up, it could be that again.
+![imagesMissing](Images/imagesMissing.png)
+![503](Images/503.png)
 
-### `/api/user/{n}/offers`
+### Finally
 
-__Request:__
-
-```sh
-curl -X GET http://admin:password@interview-tech-testing.herokuapp.com/api/user/2/offers
-```
-
-__Response:__
-
-```json
-{
-    "available_badges": "loyalty:SLOTTED,BONUS||sale:PRIORITY_ACCESS,REDUCED",
-    "offers": [
-        {
-            "id": "6",
-            "title": "Reductions!",
-            "type": "REDUCED"
-        },
-        {
-            "id": "7",
-            "title": "Special!",
-            "type": "BONUS"
-        },
-        {
-            "id": "3",
-            "title": "Priority Access!",
-            "type": "PRIORITY_ACCESS"
-        }
-    ]
-}
-```
+I enjoyed the test, particularly exploring the starter project test setup and binding framework.
+Thanks for giving me the opportunity!

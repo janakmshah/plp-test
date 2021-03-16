@@ -14,18 +14,19 @@ struct User {
     
     static var current = User(userOffers: UserOffers())
     
-    // var to support switching users and logging out
+    // A var (rather than a let) to support switching users and logging out
     var username: String {
         "admin"
     }
     
-    // var to support switching users and logging out
+    // A var (rather than a let) to support switching users and logging out
     var password: String {
         "password"
     }
     
-    // var to support switching users and logging out
+    // A var (rather than a let) to support switching users and logging out
     var id: String {
+        // "1" || "2" || "3" || "4" || "5"
         "5"
     }
     
