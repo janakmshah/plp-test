@@ -8,9 +8,9 @@ To try different user ids the `var id` in `User.swift` can be modified.
 
 I've never done a test before which had such a complete starter project. It makes a lot of sense because I can show how I would add a feature to an existing codebase. Which similar to the tasks I would be doing in the role.
 
-Initially when I was reading the instructions, and hadn't yet opened the project, I was planning to use SwiftUI, Combine etc. But, of course, the project supports a minimum iOS12 (which also meant no UICompositionalLayout) so I used the frameworks available to iOS12.
+Initially when I was reading the instructions, and hadn't yet opened the project, I was planning to use SwiftUI, Combine etc. But, of course, the project supports a minimum iOS12 (which also meant no `UICompositionalLayout`) so I used the frameworks available to iOS12.
 
-The starter project's existing binding framework (Observable) is nice and elegant. It was easy to use, understand and implement.
+The starter project's existing binding framework `(Observable)` is nice and elegant. It was easy to use, understand and implement.
 
 To me it doesn't make sense to have multiple binding frameworks, or even different syntactic styles, in one codebase. It makes reading the code confusing if the same thing is done in 3 different ways all over the place. So I decided to make my code look like the starter as much as possible, on the assumtion that the iOS team had agreed this was the style to follow and it didn't require any refactoring.
 
@@ -27,8 +27,8 @@ To make the cache thread-safe, I used a GCD concurrent Dispatch Queue with a `.b
 
 ### DispatchGroup
 
-I used a DispatchGroup in the ProductListingsViewModel to avoid having a completion within a completion.
-As there are only 2, relatively fast, network calls here it's not strictly neccessary. But good practice.
+I used a `DispatchGroup` in the `ProductListingsViewModel` to avoid having a completion within a completion.
+As there are only 2, relatively fast, network calls it's not strictly neccessary. But good practice.
 
 ### App Coordinator
 
@@ -42,7 +42,9 @@ I wrote a custom Decoder for the availableBadges model to parse it from the raw 
 
 ```
 "loyalty:SLOTTED,BONUS||sale:PRIORITY_ACCESS,REDUCED"
+
 to
+
 struct Badge: Codable {
     let name: String
     let types: [String]
@@ -66,7 +68,7 @@ Given more time I would add tests for:
 
 ### Images not showing up
 
-I noticed that occassionally the images wouldn't load and I was getting 503s from the response.
+I noticed that occassionally the images wouldn't load and I was getting 503s from the server.
 I manually tried to hit the url and saw the Heroku error screen below.
 So if some images don't show up, it could be that again.
 ![imagesMissing](Images/imagesMissing.png)
@@ -75,4 +77,5 @@ So if some images don't show up, it could be that again.
 ### Finally
 
 I enjoyed the test, particularly exploring the starter project test setup and binding framework.
-Thanks for giving me the opportunity!
+
+Thank you for giving me the opportunity!
